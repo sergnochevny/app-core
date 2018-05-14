@@ -1,20 +1,21 @@
 {
-  "name": "sn/core",
-  "description": "App Core",
-  "type": "library",
-  "minimum-stability": "stable",
-  "require": {
-    "php": ">=5.6"
-  },
-  "authors": [
-    {
-      "name": "Serg Nochevny",
-      "email": "sergnochevny@gmail.com"
+    "name": "sn/core",
+    "description": "App Core",
+    "license": "BSD-3-Clause",
+    "type": "library",
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.6"
+    },
+    "authors": [
+        {
+            "name": "Serg Nochevny",
+            "email": "sergnochevny@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "sn\\core\\": ""
+        }
     }
-  ],
-  "autoload": {
-    "psr-4": {
-      "sn\\core\\": ""
-    }
-  }
 }
