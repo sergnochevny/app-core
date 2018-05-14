@@ -7,7 +7,6 @@ use ReflectionClass;
 
 abstract class ControllerBase{
 
-    protected $layouts;
     protected $controller;
     protected $model;
 
@@ -23,10 +22,4 @@ abstract class ControllerBase{
         $this->model = App::$modelsNS . '\Model' . ucfirst($this->controller);
     }
 
-    /**
-     * @param $url
-     */
-    public function redirect($url){
-        App::$app->router()->redirect($url);
-    }
 }
