@@ -1,9 +1,9 @@
 <?php
 
-namespace app\core\controller;
+namespace sn\core\controller;
 
-use app\core\App;
-use app\core\View;
+use sn\core\App;
+use sn\core\View;
 use ReflectionClass;
 
 abstract class ControllerBase{
@@ -21,7 +21,7 @@ abstract class ControllerBase{
      */
     public $model;
     /**
-     * @var \app\core\View
+     * @var \sn\core\View
      */
     public $view;
     /**

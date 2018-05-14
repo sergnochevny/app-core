@@ -1,5 +1,5 @@
 {
-  "name": "app/core",
+  "name": "sn/core",
   "description": "App Core",
   "type": "library",
   "minimum-stability": "stable",
@@ -14,7 +14,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "app\\core\\": ""
+      "sn\\core\\": ""
     }
   }
 }

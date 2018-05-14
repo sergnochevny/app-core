@@ -1,6 +1,6 @@
 <?php
 
-namespace app\core;
+namespace sn\core;
 
 /**
  * Date: 19.12.2017

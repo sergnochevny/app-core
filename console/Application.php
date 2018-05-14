@@ -1,8 +1,8 @@
 <?php
 
-namespace app\core\console;
+namespace sn\core\console;
 
-use app\core\KeyStorage;
+use sn\core\KeyStorage;
 
 /**
  * Class Application

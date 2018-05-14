@@ -1,13 +1,13 @@
 <?php
 
-namespace app\core;
+namespace sn\core;
 
-use app\core\controller\ControllerBase;
+use sn\core\controller\ControllerBase;
 use Exception;
 
 /**
  * Class View
- * @package app\core
+ * @package sn\core
  */
 class View{
 
@@ -20,14 +20,14 @@ class View{
     protected $forcedJsFiles = [];
 
     /**
-     * @var \app\core\controller\ControllerBase
+     * @var \sn\core\controller\ControllerBase
      */
     public $controller;
 
     /**
      * Template constructor.
      * @param $layouts
-     * @param \app\core\controller\ControllerBase $controller
+     * @param \sn\core\controller\ControllerBase $controller
      */
     public function __construct($layouts, ControllerBase $controller){
         $this->layouts = $layouts;

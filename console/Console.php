@@ -1,6 +1,6 @@
 <?php
 
-namespace app\core\console;
+namespace sn\core\console;
 
 class Console{
 

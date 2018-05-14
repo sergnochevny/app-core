@@ -1,10 +1,10 @@
 <?php
 
-namespace app\core\exceptions;
+namespace sn\core\exceptions;
 
 /**
  * Class CommandArgsException
- * @package app\core
+ * @package sn\core
  */
 class CommandArgsException extends \Exception{
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace app\core;
+namespace sn\core;
 
-use app\core\exceptions\AppConfigException;
-use app\core\exceptions\ExitException;
-use app\core\exceptions\SelectDBException;
+use sn\core\exceptions\AppConfigException;
+use sn\core\exceptions\ExitException;
+use sn\core\exceptions\SelectDBException;
 use Closure;
 use Exception;
 use ReflectionClass;
@@ -390,7 +390,7 @@ class Core{
 
     /**
      * @param $name
-     * @return \app\core\DBConnection
+     * @return \sn\core\DBConnection
      */
     public function getDBConnection($name){
         if(isset($this->db[$name]) && is_array($this->db[$name])) {

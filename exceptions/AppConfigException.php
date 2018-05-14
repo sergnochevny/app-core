@@ -1,10 +1,10 @@
 <?php
 
-namespace app\core\exceptions;
+namespace sn\core\exceptions;
 
 /**
  * Class AppConfigException
- * @package app\core
+ * @package sn\core
  */
 class AppConfigException extends \Exception{
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace app\core;
+namespace sn\core;
 
-use app\core\model\ModelBase;
+use sn\core\model\ModelBase;
 use Exception;
 
 /**
  * Class KeyStorage
- * @package app\core
+ * @package sn\core
  */
 class KeyStorage{
 

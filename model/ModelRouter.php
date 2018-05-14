@@ -1,6 +1,6 @@
 <?php
 
-namespace app\core\model;
+namespace sn\core\model;
 
 /**
  * Class ModelRouter
@@ -12,7 +12,7 @@ class ModelRouter extends ModelBase{
      * @param $sef_url
      * @param $url
      * @return string
-     * @throws \app\core\exceptions\QueryException
+     * @throws \sn\core\exceptions\QueryException
      */
     public static function set_sef_url($sef_url, $url){
         $_sef_url = $sef_url;
@@ -39,7 +39,7 @@ class ModelRouter extends ModelBase{
     /**
      * @param $url
      * @return mixed
-     * @throws \app\core\exceptions\QueryException
+     * @throws \sn\core\exceptions\QueryException
      */
     public static function get_sef_url($url){
         $sef_url = $url;
@@ -59,7 +59,7 @@ class ModelRouter extends ModelBase{
     /**
      * @param $sef_url
      * @return mixed
-     * @throws \app\core\exceptions\QueryException
+     * @throws \sn\core\exceptions\QueryException
      */
     public static function get_url($sef_url){
         $url = $sef_url;

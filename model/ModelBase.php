@@ -1,13 +1,13 @@
 <?php
 
-namespace app\core\model;
+namespace sn\core\model;
 
-use app\core\App;
-use app\core\exceptions\BeginTransactionException;
-use app\core\exceptions\CommitTransactionException;
-use app\core\exceptions\ExecException;
-use app\core\exceptions\QueryException;
-use app\core\exceptions\RollBackTransactionException;
+use sn\core\App;
+use sn\core\exceptions\BeginTransactionException;
+use sn\core\exceptions\CommitTransactionException;
+use sn\core\exceptions\ExecException;
+use sn\core\exceptions\QueryException;
+use sn\core\exceptions\RollBackTransactionException;
 use PDO;
 
 class ModelBase{
@@ -192,7 +192,7 @@ class ModelBase{
 
     /**
      * @return bool
-     * @throws \app\core\exceptions\BeginTransactionException
+     * @throws \sn\core\exceptions\BeginTransactionException
      * @throws \PDOException
      */
     public static function transaction(){
@@ -208,7 +208,7 @@ class ModelBase{
 
     /**
      * @return bool
-     * @throws \app\core\exceptions\CommitTransactionException
+     * @throws \sn\core\exceptions\CommitTransactionException
      */
     public static function commit(){
         $res = !static::$inTransaction;
@@ -225,7 +225,7 @@ class ModelBase{
 
     /**
      * @return bool
-     * @throws \app\core\exceptions\RollBackTransactionException
+     * @throws \sn\core\exceptions\RollBackTransactionException
      */
     public static function rollback(){
         $res = !static::$inTransaction;
@@ -244,7 +244,7 @@ class ModelBase{
      * @param $query
      * @param null $prms
      * @return mixed
-     * @throws \app\core\exceptions\QueryException
+     * @throws \sn\core\exceptions\QueryException
      */
     public static function query($query, $prms = null){
         $res = App::$app->getDBConnection(static::$connection)->query($query, $prms);
@@ -259,7 +259,7 @@ class ModelBase{
     /**
      * @param $query
      * @return mixed
-     * @throws \app\core\exceptions\ExecException
+     * @throws \sn\core\exceptions\ExecException
      */
     public static function exec($query){
         $res = App::$app->getDBConnection(static::$connection)->exec($query);

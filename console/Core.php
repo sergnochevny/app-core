@@ -1,9 +1,9 @@
 <?php
 
-namespace app\core\console;
+namespace sn\core\console;
 
-use app\core\DBConnection;
-use app\core\exceptions\SelectDBException;
+use sn\core\DBConnection;
+use sn\core\exceptions\SelectDBException;
 use Closure;
 use Exception;
 use ReflectionClass;

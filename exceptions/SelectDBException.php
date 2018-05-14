@@ -1,10 +1,10 @@
 <?php
 
-namespace app\core\exceptions;
+namespace sn\core\exceptions;
 
 /**
  * Class SelectDBException
- * @package app\core
+ * @package sn\core
  */
 class SelectDBException extends \Exception{
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace app\core;
+namespace sn\core;
 
 use Exception;
 use PDO;
 
 /**
  * Class DBConnection
- * @package app\core
+ * @package sn\core
  */
 class DBConnection{
 

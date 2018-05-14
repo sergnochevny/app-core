@@ -1,8 +1,8 @@
 <?php
 
-namespace app\core;
+namespace sn\core;
 
-use app\core\model\ModelRouter;
+use sn\core\model\ModelRouter;
 use Exception;
 use ReflectionClass;
 
@@ -13,14 +13,14 @@ use ReflectionClass;
 class Router{
 
     /**
-     * @var \app\core\Application
+     * @var \sn\core\Application
      */
     private $app = null;
 
     private $path;
     private $exclude_params = ['page', 'back', 'idx'];
     /**
-     * @var \app\core\controller\ControllerBase|null
+     * @var \sn\core\controller\ControllerBase|null
      */
     private $controllerObj;
     /**
@@ -498,7 +498,7 @@ class Router{
     }
 
     /**
-     * @return \app\core\controller\ControllerBase|null
+     * @return \sn\core\controller\ControllerBase|null
      */
     public function get_controller(){
         return $this->controllerObj;

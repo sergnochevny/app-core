@@ -1,10 +1,10 @@
 <?php
 
-namespace app\core\exceptions;
+namespace sn\core\exceptions;
 
 /**
  * Class ExitException
- * @package app\core
+ * @package sn\core
  */
 class ExitException extends \Exception{
 

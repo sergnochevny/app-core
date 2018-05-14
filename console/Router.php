@@ -1,9 +1,9 @@
 <?php
 
-namespace app\core\console;
+namespace sn\core\console;
 
-use app\core\exceptions\CommandArgsException;
-use app\core\exceptions\ControllerPathException;
+use sn\core\exceptions\CommandArgsException;
+use sn\core\exceptions\ControllerPathException;
 use Exception;
 use ReflectionClass;
 
@@ -62,7 +62,7 @@ class Router{
 
     /**
      * @param $path
-     * @throws \app\core\exceptions\ControllerPathException
+     * @throws \sn\core\exceptions\ControllerPathException
      */
     private function setPath($path){
         $path = rtrim($path, '/\\');

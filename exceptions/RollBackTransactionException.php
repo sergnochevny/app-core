@@ -1,10 +1,10 @@
 <?php
 
-namespace app\core\exceptions;
+namespace sn\core\exceptions;
 
 /**
  * Class RollBackTransactionException
- * @package app\core
+ * @package sn\core
  */
 class RollBackTransactionException extends \Exception{
 

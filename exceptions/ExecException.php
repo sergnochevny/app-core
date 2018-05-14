@@ -3,11 +3,11 @@
  * Copyright (c) 2018. AIT
  */
 
-namespace app\core\exceptions;
+namespace sn\core\exceptions;
 
 /**
  * Class ExecException
- * @package app\core
+ * @package sn\core
  */
 class ExecException extends \Exception{
 

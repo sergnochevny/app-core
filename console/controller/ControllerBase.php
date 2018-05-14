@@ -1,8 +1,8 @@
 <?php
 
-namespace app\core\console\controller;
+namespace sn\core\console\controller;
 
-use app\core\App;
+use sn\core\App;
 use ReflectionClass;
 
 abstract class ControllerBase{
