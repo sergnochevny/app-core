@@ -1,0 +1,20 @@
+{
+  "name": "app/core",
+  "description": "App Core",
+  "type": "library",
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.6"
+  },
+  "authors": [
+    {
+      "name": "Serg Nochevny",
+      "email": "serg.nochevny@engineering.ait.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "app\\core\\": ""
+    }
+  }
+}
