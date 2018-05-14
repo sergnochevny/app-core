@@ -48,12 +48,12 @@ class Router{
     /**
      *
      */
-    private function parse_argv(){
+    private function ParseArgv(){
         $argv = Console::$app->server('argv');
         if(is_array($argv) && (count($argv) > 1)) {
             array_shift($argv);
             $this->route = array_shift($argv);
-            $this->route_explode_parts($this->route, $controller, $action);
+            $this->RouteExplodeParts($this->route, $controller, $action);
             $this->action = $action;
             $this->controller = $controller;
             $this->args = $argv;
@@ -79,7 +79,7 @@ class Router{
      * @param $controller
      * @param $action
      */
-    private function route_explode_parts($route, &$controller, &$action){
+    private function RouteExplodeParts($route, &$controller, &$action){
         $parts = explode('/', $route);
         $cmd_path = $this->path;
         foreach($parts as $part) {
@@ -102,15 +102,15 @@ class Router{
     /**
      * @throws \Exception
      */
-    public function init(){
+    public function Init(){
         $this->setPath(APP_PATH . DS . 'console' . DS . 'controllers' . DS);
-        $this->parse_argv();
+        $this->ParseArgv();
     }
 
     /**
      *
      */
-    public function handle(){
+    public function Handle(){
 
         $file = null;
         try {
@@ -137,19 +137,6 @@ class Router{
                 unset($class);
             }
         }
-    }
-
-    /**
-     * @param $path
-     * @param null $params
-     * @param null $to_sef
-     * @param null $sef_exclude_params
-     * @param bool $canonical
-     * @param bool $no_ctrl_ignore
-     * @return mixed
-     */
-    public function UrlTo($path, $params = null, $to_sef = null, $sef_exclude_params = null, $canonical = false, $no_ctrl_ignore = false){
-        return $path;
     }
 
 }

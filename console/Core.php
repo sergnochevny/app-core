@@ -34,7 +34,7 @@ class Core{
      */
     public function __construct(&$app){
         $app = $this;
-        $app->init();
+        $app->Init();
     }
 
     /**
@@ -120,7 +120,7 @@ class Core{
     /**
      *
      */
-    protected function init(){
+    protected function Init(){
         $this->initConfig();
         $this->initDBConnections();
         $this->initGlobals();
@@ -249,13 +249,13 @@ class Core{
                     strtr('Data Base  "{db}" do not select: {reason}',
                         [
                             "{db}" => $name,
-                            '{reason}' => $this->db[$name][1]->get_error()
+                            '{reason}' => $this->db[$name][1]->getError()
                         ]
                     )
                 );
             } else {
-                if($this->db[$name][1]->get_errno() > 0) {
-                    throw new SelectDBException($this->db[$name][1]->get_error());
+                if($this->db[$name][1]->getErrno() > 0) {
+                    throw new SelectDBException($this->db[$name][1]->getError());
                 }
             }
         } else {

@@ -43,7 +43,7 @@ abstract class ControllerBase{
     /**
      * @param $url
      */
-    public function redirect($url){
-        App::$app->router()->redirect($url);
+    public function Redirect($url){
+        App::$app->router()->Redirect($url);
     }
 }

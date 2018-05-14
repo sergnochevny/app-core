@@ -60,7 +60,7 @@ class DBConnection{
      * @param null $prms
      * @return \PDOStatement|bool
      */
-    public function query($query, $prms = null){
+    public function Query($query, $prms = null){
         $this->statement = $this->pdo->prepare($query);
         if(!empty($prms) && is_array($prms)) {
             foreach($prms as $key => $values) {
@@ -87,7 +87,7 @@ class DBConnection{
      * @param $query
      * @return mixed
      */
-    public function exec($query){
+    public function Exec($query){
         return $this->pdo->exec($query);
     }
 
@@ -95,35 +95,35 @@ class DBConnection{
      * @return mixed
      * @throws \PDOException
      */
-    public function begin_transaction(){
+    public function BeginTransaction(){
         return $this->pdo->beginTransaction();
     }
 
     /**
      * @return mixed
      */
-    public function commit(){
+    public function Commit(){
         return $this->pdo->commit();
     }
 
     /**
      * @return mixed
      */
-    public function in_transaction(){
+    public function InTransaction(){
         return $this->pdo->inTransaction();
     }
 
     /**
      * @return mixed
      */
-    public function roll_back(){
+    public function RollBack(){
         return $this->pdo->rollBack();
     }
 
     /**
      * @return mixed
      */
-    public function error(){
+    public function Error(){
         $this->error = $this->pdo->errorInfo();
         if(!empty($this->statement)) {
             $this->error = $this->statement->errorInfo();
@@ -142,7 +142,7 @@ class DBConnection{
     /**
      * @return mixed
      */
-    public function last_id(){
+    public function LastId(){
         return $this->pdo->lastInsertId();
     }
 
@@ -150,21 +150,21 @@ class DBConnection{
      * @param $value
      * @return mixed
      */
-    public function quote($value){
+    public function Quote($value){
         return $this->pdo->quote($value);
     }
 
     /**
      * @return mixed
      */
-    public function get_errno(){
+    public function getErrno(){
         return $this->errno;
     }
 
     /**
      * @return mixed
      */
-    public function get_error(){
+    public function getError(){
         return $this->error;
     }
 

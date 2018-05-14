@@ -24,7 +24,7 @@ class Console{
     /**
      *
      */
-    public static function set_autoloads(){
+    public static function setAutoload(){
         static::$classMap = include(__DIR__ . '/classes.php');
         spl_autoload_register(['self', 'autoload']);
     }
@@ -33,7 +33,7 @@ class Console{
      * @throws \Exception
      */
     public static function run(){
-        static::set_autoloads();
-        (new Application(self::$app))->run();
+        static::setAutoload();
+        (new Application(self::$app))->Run();
     }
 }

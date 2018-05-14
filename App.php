@@ -26,16 +26,16 @@ class App{
         return ($absFilename === false) ? false : include($absFilename);
     }
 
-    public static function set_autoloads(){
+    public static function setAutoload(){
         static::$classMap = include(__DIR__ . '/classes.php');
-        spl_autoload_register(['self', 'autoload']);
+        spl_autoload_register(['static', 'autoload']);
     }
 
     /**
      * @throws \Exception
      */
-    public static function run(){
-        static::set_autoloads();
-        (new Application(self::$app))->run();
+    public static function Run(){
+        static::setAutoload();
+        (new Application(self::$app))->Run();
     }
 }

@@ -11,5 +11,5 @@ interface ErrorHandlerInterface{
     /**
      * @return mixed
      */
-    public function handle();
+    public function Handle();
 }

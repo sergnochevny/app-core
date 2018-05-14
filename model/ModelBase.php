@@ -148,9 +148,9 @@ class ModelBase{
     public static function get_fields(){
         $response = null;
         $query = "DESCRIBE " . static::$table;
-        $result = static::query($query);
+        $result = static::Query($query);
         if($result) {
-            while($row = static::fetch_assoc($result)) {
+            while($row = static::FetchAssoc($result)) {
                 $response[$row['Field']] = $row;
             }
         }
@@ -178,7 +178,7 @@ class ModelBase{
      * @param $data
      * @return string
      */
-    public static function sanitize($data){
+    public static function Sanitize($data){
         if(is_string($data)) {
             if(function_exists('get_magic_quotes_gpc') == true && get_magic_quotes_gpc() == 1) {
                 $data = stripslashes($data);
@@ -195,11 +195,11 @@ class ModelBase{
      * @throws \sn\core\exceptions\BeginTransactionException
      * @throws \PDOException
      */
-    public static function transaction(){
+    public static function BeginTransaction(){
         if(!static::$inTransaction) {
-            static::$inTransaction = App::$app->getDBConnection(static::$connection)->begin_transaction();
+            static::$inTransaction = App::$app->getDBConnection(static::$connection)->BeginTransaction();
             if(!static::$inTransaction) {
-                throw new BeginTransactionException(self::error());
+                throw new BeginTransactionException(self::Error());
             }
         }
 
@@ -210,12 +210,12 @@ class ModelBase{
      * @return bool
      * @throws \sn\core\exceptions\CommitTransactionException
      */
-    public static function commit(){
+    public static function Commit(){
         $res = !static::$inTransaction;
         if(static::$inTransaction) {
-            $res = App::$app->getDBConnection(static::$connection)->commit();
+            $res = App::$app->getDBConnection(static::$connection)->Commit();
             if(!$res) {
-                throw new CommitTransactionException(self::error());
+                throw new CommitTransactionException(self::Error());
             }
             static::$inTransaction = false;
         }
@@ -227,12 +227,12 @@ class ModelBase{
      * @return bool
      * @throws \sn\core\exceptions\RollBackTransactionException
      */
-    public static function rollback(){
+    public static function RollBack(){
         $res = !static::$inTransaction;
         if(static::$inTransaction) {
-            $res = App::$app->getDBConnection(static::$connection)->roll_back();
+            $res = App::$app->getDBConnection(static::$connection)->RollBack();
             if(!$res) {
-                throw new RollBackTransactionException(self::error());
+                throw new RollBackTransactionException(self::Error());
             }
             static::$inTransaction = false;
         }
@@ -246,11 +246,11 @@ class ModelBase{
      * @return mixed
      * @throws \sn\core\exceptions\QueryException
      */
-    public static function query($query, $prms = null){
-        $res = App::$app->getDBConnection(static::$connection)->query($query, $prms);
+    public static function Query($query, $prms = null){
+        $res = App::$app->getDBConnection(static::$connection)->Query($query, $prms);
 
         if(!$res) {
-            throw new QueryException(self::error());
+            throw new QueryException(self::Error());
         }
 
         return $res;
@@ -261,11 +261,11 @@ class ModelBase{
      * @return mixed
      * @throws \sn\core\exceptions\ExecException
      */
-    public static function exec($query){
-        $res = App::$app->getDBConnection(static::$connection)->exec($query);
+    public static function Exec($query){
+        $res = App::$app->getDBConnection(static::$connection)->Exec($query);
 
         if(!$res) {
-            throw new ExecException(self::error());
+            throw new ExecException(self::Error());
         }
 
         return $res;
@@ -275,29 +275,29 @@ class ModelBase{
      * @param $str
      * @return mixed|null|string|string[]
      */
-    public static function prepare_for_sql($str){
-        return static::strip_data(static::sanitize($str));
+    public static function PrepareForSql($str){
+        return static::strip_data(static::Sanitize($str));
     }
 
     /**
      * @return mixed
      */
-    public static function error(){
-        return App::$app->getDBConnection(static::$connection)->error();
+    public static function Error(){
+        return App::$app->getDBConnection(static::$connection)->Error();
     }
 
     /**
      * @return mixed
      */
-    public static function last_id(){
-        return App::$app->getDBConnection(static::$connection)->last_id();
+    public static function LastId(){
+        return App::$app->getDBConnection(static::$connection)->LastId();
     }
 
     /**
      * @param \PDOStatement $from
      * @return null
      */
-    public static function fetch_assoc($from){
+    public static function FetchAssoc($from){
         return $from ? $from->fetch(PDO::FETCH_ASSOC) : null;
     }
 
@@ -305,7 +305,7 @@ class ModelBase{
      * @param \PDOStatement $from
      * @return null
      */
-    public static function fetch_assoc_all($from){
+    public static function FetchAssocAll($from){
         return $from ? $from->fetchAll(PDO::FETCH_ASSOC) : null;
     }
 
@@ -314,7 +314,7 @@ class ModelBase{
      * @param int $result_type
      * @return mixed
      */
-    public static function fetch_array($from, $result_type = PDO::FETCH_BOTH){
+    public static function FetchArray($from, $result_type = PDO::FETCH_BOTH){
         return $from ? $from->fetch($result_type) : null;
     }
 
@@ -323,7 +323,7 @@ class ModelBase{
      * @param int $result_type
      * @return mixed
      */
-    public static function fetch_array_all($from, $result_type = PDO::FETCH_BOTH){
+    public static function FetchArrayAll($from, $result_type = PDO::FETCH_BOTH){
         return $from ? $from->fetchAll($result_type) : null;
     }
 
@@ -331,7 +331,7 @@ class ModelBase{
      * @param \PDOStatement $from
      * @return mixed|null
      */
-    public static function fetch_value($from){
+    public static function FetchValue($from){
         return $from ? $from->fetch(PDO::FETCH_COLUMN) : null;
     }
 
@@ -339,7 +339,7 @@ class ModelBase{
      * @param \PDOStatement $from
      * @return int
      */
-    public static function num_rows($from){
+    public static function getNumRows($from){
         return $from ? $from->rowCount() : 0;
     }
 
@@ -347,14 +347,14 @@ class ModelBase{
      * @param \PDOStatement $from
      * @return int
      */
-    public static function affected_rows($from){
+    public static function AffectedRows($from){
         return $from ? $from->rowCount() : 0;
     }
 
     /**
      * @param \PDOStatement $from
      */
-    public static function free_result($from){
+    public static function FreeResult($from){
         if($from) $from->closeCursor();
     }
 }

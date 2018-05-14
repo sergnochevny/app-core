@@ -63,7 +63,7 @@ class Router{
      * @param $query
      * @throws \Exception
      */
-    private function parse_url(&$request_uri, &$query_string, &$query){
+    private function ParseUrl(&$request_uri, &$query_string, &$query){
         $exploded_url = parse_url($query_string);
         if(!empty($exploded_url['query'])) {
             parse_str($exploded_url['query'], $query);
@@ -76,10 +76,10 @@ class Router{
             $path = [];
         }
         $query = array_merge($query, $path);
-        if($this->sef_enable()) {
+        if($this->SefEnable()) {
             if(isset($query['route'])) {
                 $query_sef_url = $query['route'];
-                $query_path = str_replace('?', '&', $this->revert_sef_url($query_sef_url));
+                $query_path = str_replace('?', '&', $this->RevertSefUrl($query_sef_url));
                 $query_string = str_replace($query_sef_url, $query_path, $query_string);
                 $request_uri = str_replace($query_sef_url, $query_path, $request_uri);
                 parse_str($query_string, $query);
@@ -91,20 +91,20 @@ class Router{
      *
      * @throws \Exception
      */
-    private function parse_request_url(){
+    private function ParseRequestUrl(){
         $query_string = App::$app->server('QUERY_STRING');
         $request_uri = App::$app->server('REQUEST_URI');
-        $this->parse_url($request_uri, $query_string, $query);
+        $this->ParseUrl($request_uri, $query_string, $query);
         App::$app->server('QUERY_STRING', $query_string);
         App::$app->server('REQUEST_URI', $request_uri);
         App::$app->setGet($query);
         if(isset($query['redirect'])) {
             $redirect_url = $query['redirect'];
             unset($query['redirect']);
-            $this->redirect_301($this->UrlTo($redirect_url, $query));
+            $this->Redirect301($this->UrlTo($redirect_url, $query));
         }
-        $this->route = $this->sanitize_url((empty(App::$app->get('route'))) ? '' : App::$app->get('route'));
-        $this->url_explode_parts($this->route, $controller, $action, $args);
+        $this->route = $this->SanitizeUrl((empty(App::$app->get('route'))) ? '' : App::$app->get('route'));
+        $this->UrlExplodeParts($this->route, $controller, $action, $args);
         $this->action = $action;
         $this->controller = $controller;
         $this->args = $args;
@@ -113,7 +113,7 @@ class Router{
     /**
      * @param $redirect_url
      */
-    private function redirect_301($redirect_url){
+    private function Redirect301($redirect_url){
         header('Location: ' . $redirect_url, true, 301);
         exit;
     }
@@ -121,7 +121,7 @@ class Router{
     /**
      * @return bool
      */
-    private function sef_enable(){
+    private function SefEnable(){
         $res = (!is_null(App::$app->keyStorage()->system_enable_sef) ? App::$app->keyStorage()->system_enable_sef : ENABLE_SEF) &&
             empty(App::$app->session('_a'));
 
@@ -135,20 +135,20 @@ class Router{
      * @return mixed
      * @throws \Exception
      */
-    private function revert_sef_url($sef_url, $suff = null, $pref = null){
+    private function RevertSefUrl($sef_url, $suff = null, $pref = null){
         $url = $sef_url;
         if(strlen(trim($pref))) {
-            $pref = $this->convert($pref);
+            $pref = $this->NormalizeUrl($pref);
             if(strlen(trim($pref)))
                 $sef_url = str_replace(trim($pref), '', $sef_url);
         }
         if(strlen(trim($suff))) {
-            $suff = $this->convert($suff);
+            $suff = $this->NormalizeUrl($suff);
             if(strlen(trim($suff)))
                 $sef_url = str_replace(trim($suff), '', $sef_url);
         }
         $sef_url = preg_replace('/-$/i', '', preg_replace('/^-/i', '', $sef_url));
-        $url = ModelRouter::get_url($sef_url);
+        $url = ModelRouter::getUrl($sef_url);
 
         return $url;
     }
@@ -157,7 +157,7 @@ class Router{
      * @param $in
      * @return string
      */
-    private function convert($in){
+    private function NormalizeUrl($in){
         $out = preg_replace('/[^a-zA-Z0-9]+/i', ' ', $in);
         $out = trim(preg_replace('/\s{2,}/', ' ', $out));
         $out = str_replace(' ', '-', $out);
@@ -203,7 +203,7 @@ class Router{
      * @param bool $new_url
      * @return string
      */
-    private function http_build_url($url, $parts = [], $flags = null, &$new_url = false){
+    private function HttpBuildUrl($url, $parts = [], $flags = null, &$new_url = false){
         if(!function_exists('http_build_url')) {
 
             if(is_null($flags))
@@ -264,16 +264,16 @@ class Router{
      * @return string
      * @throws \Exception
      */
-    private function build_sef_url($to_url, $url, $suff = null, $pref = null){
-        $sef_url = $this->convert(trim($to_url));
-        $url = ModelRouter::set_sef_url($sef_url, $url);
+    private function BuildSefUrl($to_url, $url, $suff = null, $pref = null){
+        $sef_url = $this->NormalizeUrl(trim($to_url));
+        $url = ModelRouter::setSefUrl($sef_url, $url);
         if(strlen(trim($pref))) {
-            $pref = $this->convert($pref);
+            $pref = $this->NormalizeUrl($pref);
             if(strlen(trim($pref)))
                 $url = $pref . '-' . trim($url);
         }
         if(strlen(trim($suff))) {
-            $suff = $this->convert($suff);
+            $suff = $this->NormalizeUrl($suff);
             if(strlen(trim($suff)))
                 $url = $url . '-' . trim($suff);
         }
@@ -286,7 +286,7 @@ class Router{
      * @param $route
      * @return string
      */
-    private function sanitize_url($route){
+    private function SanitizeUrl($route){
         if(empty($route)) $route = 'index';
 
         return trim($route, '/\\');
@@ -298,7 +298,7 @@ class Router{
      * @param $action
      * @param $args
      */
-    private function url_explode_parts($route, &$controller, &$action, &$args){
+    private function UrlExplodeParts($route, &$controller, &$action, &$args){
         $parts = explode('/', $route);
         $cmd_path = $this->path;
         foreach($parts as $part) {
@@ -322,7 +322,7 @@ class Router{
     /**
      * @throws \Exception
      */
-    public function init(){
+    public function Init(){
         if(!function_exists('http_build_url')) {
             define('HTTP_URL_REPLACE', 1);                // Replace every part of the first URL when there's one of the second URL
             define('HTTP_URL_JOIN_PATH', 2);            // Join relative paths
@@ -347,7 +347,7 @@ class Router{
      * @param $args
      * @throws \Exception
      */
-    public function parse_referrer_url(&$route, &$controller, &$action, &$args){
+    public function ParseReferrerUrl(&$route, &$controller, &$action, &$args){
         $referrer_url = App::$app->server('HTTP_REFERER');
         $referrer_uri = str_replace($this->base_url, '', $referrer_url);
         $query_string = 'route=' . ltrim($referrer_uri, "\\/");
@@ -363,18 +363,18 @@ class Router{
             $path = [];
         }
         $query = array_merge($query, $path);
-        $this->parse_url($referrer_uri, $query_string, $query);
-        $route = $this->sanitize_url((empty($query['route'])) ? '' : $query['route']);
-        $this->url_explode_parts($route, $controller, $action, $args);
+        $this->ParseUrl($referrer_uri, $query_string, $query);
+        $route = $this->SanitizeUrl((empty($query['route'])) ? '' : $query['route']);
+        $this->UrlExplodeParts($route, $controller, $action, $args);
     }
 
     /**
      * @throws \Exception
      */
-    public function handle(){
+    public function Handle(){
 
         $this->setBaseUrl();
-        $this->parse_request_url();
+        $this->ParseRequestUrl();
 
         $file = null;
         try {
@@ -409,8 +409,8 @@ class Router{
     /**
      * @param $url
      */
-    public function redirect($url){
-        if(App::$app->request_is_ajax()) {
+    public function Redirect($url){
+        if(App::$app->RequestIsAjax()) {
             $redirect_script = '<script>' .
                 'window.location="' . $url . '";' .
                 'if(typeof $ !== "undefined") setTimeout(function(){$("body").waitloader("show");},50);' .
@@ -429,8 +429,8 @@ class Router{
      */
     public function RefTo($path, $params = null){
         if(!is_null($params) && is_array($params) && (count($params) > 0))
-            $url = $this->http_build_url($path, ['query' => http_build_query($params)]);
-        else $url = $this->http_build_url($path);
+            $url = $this->HttpBuildUrl($path, ['query' => http_build_query($params)]);
+        else $url = $this->HttpBuildUrl($path);
 
         return $url;
     }
@@ -446,7 +446,7 @@ class Router{
      * @throws \Exception
      */
     public function UrlTo($path, $params = null, $to_sef = null, $sef_exclude_params = null, $canonical = false, $no_ctrl_ignore = false){
-        if($this->sef_enable()) {
+        if($this->SefEnable()) {
             $sef_exclude_params = isset($sef_exclude_params) ? $sef_exclude_params : [];
             if(!$no_ctrl_ignore && is_callable([App::$controllersNS . '\Controller' . ucfirst($this->controller), 'urlto_sef_ignore_prms']))
                 $exclude_params = forward_static_call([App::$controllersNS . '\Controller' . ucfirst($this->controller), 'urlto_sef_ignore_prms']);
@@ -468,19 +468,19 @@ class Router{
                 $params = array_merge($params, $_params);
             }
             $sef_include_params = (isset($params) && (count($params) > 0)) ? array_diff_key($params, array_flip($sef_exclude_params)) : null;
-            if(isset($sef_include_params)) $_path = $this->http_build_url(trim($_path, DS), ['query' => http_build_query($sef_include_params)]);
-            else $_path = $this->http_build_url(trim($_path, DS));
+            if(isset($sef_include_params)) $_path = $this->HttpBuildUrl(trim($_path, DS), ['query' => http_build_query($sef_include_params)]);
+            else $_path = $this->HttpBuildUrl(trim($_path, DS));
             if(isset($to_sef)) {
-                $path = $this->build_sef_url($to_sef, $_path);
+                $path = $this->BuildSefUrl($to_sef, $_path);
             } else {
-                $path = ModelRouter::get_sef_url($_path);
+                $path = ModelRouter::getSefUrl($_path);
             }
             $params = isset($params) ? array_intersect_key($params, array_flip($sef_exclude_params)) : [];
             if(strpos($path, $this->base_url) == false)
                 $path = $this->base_url . DS . $path;
             if(!$canonical && !is_null($params) && is_array($params) && (count($params) > 0))
-                $url = $this->http_build_url($path, ['query' => http_build_query($params)]);
-            else $url = $this->http_build_url($path);
+                $url = $this->HttpBuildUrl($path, ['query' => http_build_query($params)]);
+            else $url = $this->HttpBuildUrl($path);
         } else {
             $path = rtrim(trim($path), DS);
             if(strpos($path, '{base_url}') !== false) {
@@ -491,8 +491,8 @@ class Router{
             }
 
             if(!is_null($params))
-                $url = $this->http_build_url($path, ['query' => http_build_query($params)]);
-            else $url = $this->http_build_url($path);
+                $url = $this->HttpBuildUrl($path, ['query' => http_build_query($params)]);
+            else $url = $this->HttpBuildUrl($path);
         }
 
         return $url;
@@ -501,7 +501,7 @@ class Router{
     /**
      * @return \sn\core\controller\ControllerBase|null
      */
-    public function get_controller(){
+    public function getController(){
         return $this->controllerObj;
     }
 }

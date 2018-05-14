@@ -29,21 +29,21 @@ class Application extends Core{
   /**
    * @throws \Exception
    */
-  protected function init(){
-    parent::init();
+  protected function Init(){
+    parent::Init();
     $this->SelectDB('default');
     $this->router = new Router($this);
     $this->keystorage = new KeyStorage();
-    $this->keystorage->init();
-    $this->router->init();
+    $this->keystorage->Init();
+    $this->router->Init();
   }
 
   /**
    *
    * @throws \Exception
    */
-  public function run(){
-    $this->router->handle();
+  public function Run(){
+    $this->router->Handle();
   }
 
 }

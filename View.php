@@ -37,7 +37,7 @@ class View{
     /**
      * @param $lines
      */
-    protected function renderJs(&$lines){
+    protected function RenderJs(&$lines){
         if(!empty(array_filter($this->js))) {
             $lines[] = implode("\n", array_filter($this->js));
         }
@@ -46,7 +46,7 @@ class View{
     /**
      * @throws \Exception
      */
-    public function renderCssLinks(){
+    public function RenderCssLinks(){
         $lines = [];
         if(!empty($this->cssFiles)) {
             ksort($this->cssFiles, SORT_NUMERIC);
@@ -61,7 +61,7 @@ class View{
         return empty($lines) ? '' : preg_replace("/ {2,}/", " ", strtr(implode("\n", $lines), ["\n" => '', "\r" => '']));
     }
 
-    public function renderJsLinks(){
+    public function RenderJsLinks(){
         $lines = [];
         $js = array_filter($this->jsFiles);
         if(!empty($js)) {
@@ -82,7 +82,7 @@ class View{
                 $scripts = "'" . implode("','", array_filter(array_unique($this->forcedJsFiles))) . "'";
             }
             $lines[] = $scripts . "], function() {";
-            $this->renderJs($lines);
+            $this->RenderJs($lines);
             $lines[] = '});';
         }
         if(!empty($lines)) $lines[] = '})();';
@@ -93,7 +93,7 @@ class View{
     /**
      * @param $js
      */
-    public function registerJS($js){
+    public function RegisterJS($js){
         $this->js[] = $js;
     }
 
@@ -102,7 +102,7 @@ class View{
      * @param int $level
      * @param bool $forcedLoading
      */
-    public function registerJSFile($href_js, $level = 0, $forcedLoading = false){
+    public function RegisterJSFile($href_js, $level = 0, $forcedLoading = false){
         $this->jsFiles[$level][] = $href_js;
         if($forcedLoading) $this->forcedJsFiles[] = $href_js;
     }
@@ -110,7 +110,7 @@ class View{
     /**
      * @param $href_css
      */
-    public function registerCSSFile($href_css, $level = 0){
+    public function RegisterCSSFile($href_css, $level = 0){
         $this->cssFiles[$level][] = $href_css;
     }
 
@@ -118,7 +118,7 @@ class View{
      * @param array $vars
      * @return array
      */
-    public function get_vars(...$vars){
+    public function getVars(...$vars){
         if(!empty($vars)) {
             return array_filter(
                 $this->vars,
@@ -136,7 +136,7 @@ class View{
      * @param array $vars
      * @return bool
      */
-    public function merge_vars(array $vars){
+    public function MergeVars(array $vars){
         if(is_array($vars)) {
             $this->vars = array_merge($this->vars, $vars);
 
@@ -150,7 +150,7 @@ class View{
      * @param array $vars
      * @return bool
      */
-    public function assign_vars(array $vars){
+    public function AssignVars(array $vars){
         if(is_array($vars)) {
             $this->vars = array_slice($vars, 0);
 
@@ -166,7 +166,7 @@ class View{
      * @param bool $token
      * @return bool
      */
-    public function vars($varname, $value, $token = true){
+    public function setVars($varname, $value, $token = true){
         if((isset($this->vars[$varname]) == true) && (!$token)) {
             return false;
         }
@@ -180,7 +180,7 @@ class View{
      * @param null $controller
      * @return mixed
      */
-    public function render($name, $controller = null){
+    public function Render($name, $controller = null){
         $pathLayout = APP_PATH . DS . 'views' . DS . 'layouts' . DS . $this->layouts . '.php';
         if(!isset($controller)) {
             $controller = $this->controller->controller;
@@ -212,7 +212,7 @@ class View{
      * @return mixed
      * @throws \Exception
      */
-    public function render_layout($name, $renderJS = true, $controller = null){
+    public function RenderLayout($name, $renderJS = true, $controller = null){
         if(!isset($controller)) $controller = $this->controller->controller;
         if(is_string($controller) && (strlen($controller) > 0))
             $contentPage = APP_PATH . DS . 'views' . DS . $controller . DS . $name . '.php';
@@ -223,7 +223,7 @@ class View{
         extract($this->vars);
         include($contentPage);
         if($renderJS) {
-            echo $this->renderJsLinks();
+            echo $this->RenderJsLinks();
         }
 
         return;
@@ -236,11 +236,11 @@ class View{
      * @return string
      * @throws \Exception
      */
-    public function render_layout_return($name, $renderJS = false, $controller = null){
+    public function RenderLayoutReturn($name, $renderJS = false, $controller = null){
         ob_start();
         ob_implicit_flush(false);
         try {
-            $this->render_layout($name, $renderJS, $controller);
+            $this->RenderLayout($name, $renderJS, $controller);
         } catch(\Exception $e) {
             echo $e->getMessage();
         }
