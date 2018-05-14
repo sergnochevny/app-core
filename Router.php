@@ -2,9 +2,10 @@
 
 namespace sn\core;
 
-use sn\core\model\ModelRouter;
 use Exception;
 use ReflectionClass;
+use sn\core\exceptions\ExitException;
+use sn\core\model\ModelRouter;
 
 /**
  * Class Router
