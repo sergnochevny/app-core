@@ -10,7 +10,7 @@ use Exception;
 
 /**
  * Class ModelConsole
- * @package console\models
+ * @package sn\core\console\model
  */
 class ModelConsole extends ModelBase{
 
