@@ -1,12 +1,9 @@
 <?php
-/**
- * Copyright (c) 2018. AIT
- */
 
 namespace sn\core\console\model;
 
+use sn\core\exceptions\QueryException;
 use sn\core\model\ModelBase;
-use Exception;
 
 /**
  * Class ModelConsole
@@ -69,7 +66,7 @@ class ModelConsole extends ModelBase{
             $response = static::FetchValue($result);
             static::FreeResult($result);
         } else {
-            throw new Exception(static::Error());
+            throw new QueryException(static::Error());
         }
 
         return $response;
@@ -91,7 +88,7 @@ class ModelConsole extends ModelBase{
                 $data = static::FetchAssoc($result);
                 static::FreeResult($result);
             } else {
-                throw new Exception(static::Error());
+                throw new QueryException(static::Error());
             }
         }
 
@@ -120,7 +117,7 @@ class ModelConsole extends ModelBase{
             }
             static::FreeResult($result);
         } else {
-            throw new Exception(static::Error());
+            throw new QueryException(static::Error());
         }
 
         return $response;
@@ -144,7 +141,7 @@ class ModelConsole extends ModelBase{
             }
             $query .= "(" . $fields . ") VALUES(" . $values . ")";
             if(!($result = static::Query($query, $prms))) {
-                throw new Exception(static::error());
+                throw new QueryException(static::error());
             }
             static::FreeResult($result);
             $result = true;
@@ -161,7 +158,7 @@ class ModelConsole extends ModelBase{
         $query = "DELETE FROM " . static::$table;
         $query .= static::BuildWhere($where, $prms);
         if(!($result = static::Query($query, $prms))) {
-            throw new Exception(static::Error());
+            throw new QueryException(static::Error());
         }
         static::FreeResult($result);
     }
