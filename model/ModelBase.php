@@ -2,13 +2,13 @@
 
 namespace sn\core\model;
 
+use PDO;
 use sn\core\App;
 use sn\core\exceptions\BeginTransactionException;
 use sn\core\exceptions\CommitTransactionException;
 use sn\core\exceptions\ExecException;
 use sn\core\exceptions\QueryException;
 use sn\core\exceptions\RollBackTransactionException;
-use PDO;
 
 class ModelBase{
 
@@ -24,7 +24,7 @@ class ModelBase{
      * @param $var_tpl
      * @return string
      */
-    protected static function build_in_sql_prm($prm, $var_tpl){
+    protected static function BuildInSqlPrm($prm, $var_tpl){
         $in_values = array_fill(0, count($prm), ':' . $var_tpl);
         array_walk($in_values, function(&$val, $idx){
             $val = $val . $idx;
@@ -38,7 +38,7 @@ class ModelBase{
      * @param $var_tpl
      * @return string
      */
-    protected static function build_from_to_sql_prm($prm_tpl, array $prm, $var_tpl){
+    protected static function BuildFromToSqlPrm($prm_tpl, array $prm, $var_tpl){
         if(!empty($prm)) {
             $from_to_values_array = [];
             foreach($prm as $idx => $prm_item) {
@@ -57,7 +57,7 @@ class ModelBase{
      * @param $sort
      * @return string
      */
-    protected static function build_order(&$sort){
+    protected static function BuildOrder(&$sort){
         $order = '';
         if(isset($sort) && (count($sort) > 0)) {
             foreach($sort as $key => $val) {
@@ -75,7 +75,7 @@ class ModelBase{
      * @param null $prms
      * @return string
      */
-    public static function build_where(&$filter, &$prms = null){
+    public static function BuildWhere(&$filter, &$prms = null){
         $query = "";
         if(isset($filter)) {
             $where = "";
@@ -120,7 +120,7 @@ class ModelBase{
                             break;
                         case 'in':
                             if(is_array($val[1])) {
-                                $result[] = $key . " in (" . static::build_in_sql_prm($val[1], str_replace('.', '', $key)) . ")";
+                                $result[] = $key . " in (" . static::BuildInSqlPrm($val[1], str_replace('.', '', $key)) . ")";
                                 $prms[str_replace('.', '', $key)] = $val[1];
                             } else {
                                 $where1 .= $key . " = :" . str_replace('.', '', $key);
@@ -145,7 +145,7 @@ class ModelBase{
      * @return null
      * @throws \Exception
      */
-    public static function get_fields(){
+    public static function getFields(){
         $response = null;
         $query = "DESCRIBE " . static::$table;
         $result = static::Query($query);
@@ -162,7 +162,7 @@ class ModelBase{
      * @param $text
      * @return mixed|null|string|string[]
      */
-    public static function strip_data($text){
+    public static function StripData($text){
         $quotes = ["\x27", "\x22", "\x60", "\t", "\n", "\r", "*", "%", "<", ">", "?", "!"];
         $goodquotes = ["-", "+", "#"];
         $repquotes = ["\-", "\+", "\#"];
@@ -276,7 +276,7 @@ class ModelBase{
      * @return mixed|null|string|string[]
      */
     public static function PrepareForSql($str){
-        return static::strip_data(static::Sanitize($str));
+        return static::StripData(static::Sanitize($str));
     }
 
     /**
