@@ -6,9 +6,11 @@ class Console{
 
     /* @var $app Application */
     static public $app;
+
     static public $classMap;
 
     static public $controllersNS = 'console\controllers';
+
     static public $modelsNS = 'console\models';
 
     static function autoload($className){
@@ -18,7 +20,8 @@ class Console{
             $filename = $className . '.php';
         }
         $absFilename = realpath(strtr(APP_PATH . DS . $filename, '\\', DS));
-        return ($absFilename === false) ?  false : include($absFilename);
+
+        return ($absFilename === false) ? false : include($absFilename);
     }
 
     /**
