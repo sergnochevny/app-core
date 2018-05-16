@@ -18,7 +18,7 @@ class Application extends Core{
   /**
    * @var KeyStorage
    */
-  protected $keystorage;
+  protected $KeyStorage;
 
   /**
    * @throws \Exception
@@ -27,8 +27,8 @@ class Application extends Core{
     parent::Init();
     $this->SelectDB('default');
     $this->router = new Router($this);
-    $this->keystorage = new KeyStorage();
-    $this->keystorage->Init();
+    $this->KeyStorage = new KeyStorage();
+    $this->KeyStorage->Init();
     $this->router->Init();
   }
 

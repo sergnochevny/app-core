@@ -1,7 +1,4 @@
 <?php
-/**
- * Copyright (c) 2018. AIT
- */
 
 namespace sn\core;
 
@@ -12,7 +9,7 @@ use Exception;
  * Class KeyStorage
  * @package sn\core
  */
-class KeyStorage extends BaseKeyStorage{
+class KeyStorage extends KeyStorageBase{
 
     /**
      * @param $key

@@ -8,6 +8,7 @@ use ReflectionClass;
 abstract class ControllerBase{
 
     protected $controller;
+
     protected $model;
 
     public $vars = [];

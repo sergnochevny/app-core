@@ -1,19 +1,16 @@
 <?php
-/**
- * Copyright (c) 2018. AIT
- */
 
 namespace sn\core\console;
 
 use Exception;
-use sn\core\BaseKeyStorage;
+use sn\core\KeyStorageBase;
 use sn\core\console\model\ModelConsole;
 
 /**
  * Class KeyStorage
  * @package sn\core\console
  */
-class KeyStorage extends BaseKeyStorage{
+class KeyStorage extends KeyStorageBase{
 
     /**
      * @param $key

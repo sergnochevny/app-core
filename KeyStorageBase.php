@@ -3,15 +3,28 @@
 namespace sn\core;
 
 /**
- * Class BaseKeyStorage
+ * Class KeyStorageBase
  * @package sn\core
  */
-class BaseKeyStorage{
+abstract class KeyStorageBase{
 
     /**
      * @var array
      */
     protected $storage = [];
+
+    /**
+     * @param $key
+     * @return mixed
+     */
+    abstract protected function get($key);
+
+    /**
+     * @param $key
+     * @param $value
+     * @return mixed
+     */
+    abstract protected function set($key, $value);
 
     /**
      * @param $name
