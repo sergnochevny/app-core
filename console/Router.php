@@ -92,7 +92,7 @@ class Router{
                 array_shift($parts);
                 continue;
             }
-            if(is_file($cmd_path . 'Controller' . ucfirst($part) . '.php')) {
+            if(is_file(realpath(strtr($cmd_path . 'Controller' . ucfirst($part) . '.php', '\\', DS)))) {
                 $controller = $part;
                 array_shift($parts);
                 break;
