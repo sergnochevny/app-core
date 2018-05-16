@@ -1,7 +1,4 @@
 <?php
-/**
- * Copyright (c) 2018. AIT
- */
 
 namespace sn\core\model;
 
