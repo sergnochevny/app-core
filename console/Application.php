@@ -8,15 +8,11 @@ use sn\core\KeyStorage;
  * Class Application
  *
  * @property Router router
- * @property KeyStorage keystorage
- *
+ * @method KeyStorage keyStorage()
  * @method string|[] server(...$prm)
- * @method string|[] session(...$prm)
  * @method string|[] router(...$prm)
  * @method string|[] db($prm)
  * @method string|[] connections($prm)
- * @method string|[] get(...$prm)
- * @method string|[] post(...$prm)
  * @method string|[] config(...$key)
  */
 class Application extends Core{

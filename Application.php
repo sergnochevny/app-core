@@ -4,11 +4,17 @@ namespace sn\core;
 
 /**
  * Class Application
- * @package core
+ * @package sn\core
  *
  * @property Router router
- * @property KeyStorage keystorage
- *
+ * @method string|[] server(...$prm)
+ * @method string|[] session(...$prm)
+ * @method string|[] router(...$prm)
+ * @method string|[] db($prm)
+ * @method string|[] connections($prm)
+ * @method string|[] get(...$prm)
+ * @method string|[] post(...$prm)
+ * @method string|[] config(...$key)
  * @inheritdoc
  * @method KeyStorage keyStorage()
  */

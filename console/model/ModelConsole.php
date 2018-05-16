@@ -3,13 +3,12 @@
 namespace sn\core\console\model;
 
 use sn\core\exceptions\QueryException;
-use sn\core\model\ModelBase;
 
 /**
  * Class ModelConsole
  * @package sn\core\console\model
  */
-class ModelConsole extends ModelBase{
+class ModelConsole extends ModelTableBase{
 
     /**
      * @param $filter

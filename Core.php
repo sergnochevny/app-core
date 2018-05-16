@@ -390,7 +390,7 @@ class Core{
 
     /**
      * @param $name
-     * @return \sn\core\DBConnection
+     * @return null|\sn\core\DBConnection
      */
     public function getDBConnection($name){
         if(isset($this->db[$name]) && is_array($this->db[$name])) {

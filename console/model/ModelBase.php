@@ -1,37 +1,18 @@
 <?php
+/**
+ * Copyright (c) 2018. AIT
+ */
 
-namespace sn\core\model;
+namespace sn\core\console\model;
 
 use PDO;
-use sn\core\App;
+use sn\core\console\Console;
 use sn\core\exceptions\BeginTransactionException;
 use sn\core\exceptions\CommitTransactionException;
-use sn\core\exceptions\ExecException;
-use sn\core\exceptions\QueryException;
 use sn\core\exceptions\RollBackTransactionException;
+use sn\core\model\AbstractModel;
 
-class ModelBase extends AbstractModel{
-
-    protected static $table;
-
-    public static $filter_exclude_keys = ['scenario', 'reset'];
-
-    /**
-     * @return null
-     * @throws \Exception
-     */
-    public static function getFields(){
-        $response = null;
-        $query = "DESCRIBE " . static::$table;
-        $result = static::Query($query);
-        if($result) {
-            while($row = static::FetchAssoc($result)) {
-                $response[$row['Field']] = $row;
-            }
-        }
-
-        return $response;
-    }
+abstract class ModelBase extends AbstractModel{
 
     /**
      * @return bool
@@ -40,7 +21,7 @@ class ModelBase extends AbstractModel{
      */
     public static function BeginTransaction(){
         if(!static::$inTransaction) {
-            static::$inTransaction = App::$app->getDBConnection(static::$connection)->BeginTransaction();
+            static::$inTransaction = Console::$app->getDBConnection(static::$connection)->BeginTransaction();
             if(!static::$inTransaction) {
                 throw new BeginTransactionException(self::Error());
             }
@@ -56,7 +37,7 @@ class ModelBase extends AbstractModel{
     public static function Commit(){
         $res = !static::$inTransaction;
         if(static::$inTransaction) {
-            $res = App::$app->getDBConnection(static::$connection)->Commit();
+            $res = Console::$app->getDBConnection(static::$connection)->Commit();
             if(!$res) {
                 throw new CommitTransactionException(self::Error());
             }
@@ -73,7 +54,7 @@ class ModelBase extends AbstractModel{
     public static function RollBack(){
         $res = !static::$inTransaction;
         if(static::$inTransaction) {
-            $res = App::$app->getDBConnection(static::$connection)->RollBack();
+            $res = Console::$app->getDBConnection(static::$connection)->RollBack();
             if(!$res) {
                 throw new RollBackTransactionException(self::Error());
             }
@@ -84,48 +65,10 @@ class ModelBase extends AbstractModel{
     }
 
     /**
-     * @param $query
-     * @param null $prms
-     * @return mixed
-     * @throws \sn\core\exceptions\QueryException
-     */
-    public static function Query($query, $prms = null){
-        $res = App::$app->getDBConnection(static::$connection)->Query($query, $prms);
-
-        if(!$res) {
-            throw new QueryException(self::Error());
-        }
-
-        return $res;
-    }
-
-    /**
-     * @param $query
-     * @return mixed
-     * @throws \sn\core\exceptions\ExecException
-     */
-    public static function Exec($query){
-        $res = App::$app->getDBConnection(static::$connection)->Exec($query);
-
-        if(!$res) {
-            throw new ExecException(self::Error());
-        }
-
-        return $res;
-    }
-
-    /**
      * @return mixed
      */
     public static function Error(){
-        return App::$app->getDBConnection(static::$connection)->Error();
-    }
-
-    /**
-     * @return mixed
-     */
-    public static function LastId(){
-        return App::$app->getDBConnection(static::$connection)->LastId();
+        return Console::$app->getDBConnection(static::$connection)->Error();
     }
 
     /**
@@ -168,14 +111,6 @@ class ModelBase extends AbstractModel{
      */
     public static function FetchValue($from){
         return $from ? $from->fetch(PDO::FETCH_COLUMN) : null;
-    }
-
-    /**
-     * @param \PDOStatement $from
-     * @return int
-     */
-    public static function getNumRows($from){
-        return $from ? $from->rowCount() : 0;
     }
 
     /**
