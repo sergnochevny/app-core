@@ -3,14 +3,15 @@
  * Copyright (c) 2018. AIT
  */
 
-namespace sn\core;
+namespace sn\core\console;
 
-use sn\core\model\ModelBase;
 use Exception;
+use sn\core\BaseKeyStorage;
+use sn\core\console\model\ModelConsole;
 
 /**
  * Class KeyStorage
- * @package sn\core
+ * @package sn\core\console
  */
 class KeyStorage extends BaseKeyStorage{
 
@@ -26,16 +27,16 @@ class KeyStorage extends BaseKeyStorage{
             } else {
                 $q = "SELECT value FROM key_storage";
                 $q .= "  where `key` = :key";
-                $res = ModelBase::Query($q, ['key' => $key]);
+                $res = ModelConsole::Query($q, ['key' => $key]);
                 if($res) {
-                    $value = ModelBase::FetchValue($res);
+                    $value = ModelConsole::FetchValue($res);
                     if(!is_null($value)) {
                         $this->storage[$key] = $value;
 
                         return $value;
                     }
                 } else {
-                    throw new Exception(ModelBase::Error());
+                    throw new Exception(ModelConsole::Error());
                 }
             }
         }
@@ -51,11 +52,11 @@ class KeyStorage extends BaseKeyStorage{
     protected function set($key, $value){
 
         if(isset($key) && isset($value)) {
-            $value = ModelBase::Sanitize($value);
+            $value = ModelConsole::Sanitize($value);
             $q = "REPLACE INTO key_storage SET `key` = :key, `value` = :value";
-            $res = ModelBase::Query($q, ['key' => $key, 'value' => $value]);
+            $res = ModelConsole::Query($q, ['key'=>$key, 'value'=>$value]);
             if(!$res)
-                throw new Exception(ModelBase::Error());
+                throw new Exception(ModelConsole::Error());
 
             $this->storage[$key] = $value;
         }
@@ -66,13 +67,13 @@ class KeyStorage extends BaseKeyStorage{
      */
     public function Init(){
         $q = "SELECT `key`, `value` FROM key_storage";
-        $res = ModelBase::Query($q);
+        $res = ModelConsole::Query($q);
         if($res) {
-            while($row = ModelBase::FetchAssoc($res)) {
+            while($row = ModelConsole::FetchAssoc($res)) {
                 $this->storage[$row['key']] = $row['value'];
             }
         } else {
-            throw new Exception(ModelBase::Error());
+            throw new Exception(ModelConsole::Error());
         }
     }
 

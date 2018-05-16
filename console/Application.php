@@ -2,8 +2,6 @@
 
 namespace sn\core\console;
 
-use sn\core\KeyStorage;
-
 /**
  * Class Application
  *
