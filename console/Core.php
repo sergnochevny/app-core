@@ -158,10 +158,9 @@ class Core{
         $direct_set = strpos($name, 'set') !== false;
         $name = strtolower(str_replace(['set', ' '], '', $name));
         if(property_exists($this, $name)) {
-            $class = (new ReflectionClass($this))->getShortName();
             if(is_array($this->{$name}) && !$direct_set) {
-                $getProperty = new ReflectionMethod($class, 'getArrayProperty');
-                $setProperty = new ReflectionMethod($class, 'setArrayProperty');
+                $getProperty = new ReflectionMethod($this, 'getArrayProperty');
+                $setProperty = new ReflectionMethod($this, 'setArrayProperty');
                 array_unshift($arguments, $name);
                 switch(count($arguments)) {
                     case $getProperty->getNumberOfParameters():
@@ -169,7 +168,7 @@ class Core{
                     case $setProperty->getNumberOfParameters():
                         return $setProperty->invokeArgs($this, $arguments);
                     default:
-                        $getProperty = new ReflectionMethod($class, 'getProperty');
+                        $getProperty = new ReflectionMethod($this, 'getProperty');
 
                         return $getProperty->invokeArgs($this, $arguments);
                 }
@@ -177,8 +176,8 @@ class Core{
                 if(method_exists($this, 'set' . $name)) {
                     call_user_func_array([$this, 'set' . $name], $arguments);
                 } else {
-                    $getProperty = new ReflectionMethod($class, 'getProperty');
-                    $setProperty = new ReflectionMethod($class, 'setProperty');
+                    $getProperty = new ReflectionMethod($this, 'getProperty');
+                    $setProperty = new ReflectionMethod($this, 'setProperty');
                     array_unshift($arguments, $name);
                     switch(count($arguments)) {
                         case $getProperty->getNumberOfParameters():
