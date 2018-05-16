@@ -70,15 +70,19 @@ abstract class CoreBase{
                     if(is_array($values)) {
                         if(count(array_filter(array_keys($values), "is_int")) == count($values)) {
                             foreach($values as $value) {
-                                if(!is_array($value)) $value = [$value];
+                                if(!is_array($value)) {
+                                    $value = [$value];
+                                }
                                 call_user_func_array($key, $value);
                             }
                         } else {
                             $closure = [];
                             foreach($values as $var => $val) {
-                                if($val instanceof Closure)
+                                if($val instanceof Closure) {
                                     $closure[$var] = $val;
-                                else call_user_func_array($key, [$var, $val]);
+                                } else {
+                                    call_user_func_array($key, [$var, $val]);
+                                }
                             }
                             foreach($closure as $var => $func) {
                                 $val = call_user_func($func);
