@@ -49,15 +49,19 @@ class Router{
      *
      */
     private function ParseArgv(){
+        $action = 'index';
+        $controller = 'index';
         $argv = Console::$app->server('argv');
-        if(is_array($argv) && (count($argv) > 1)) {
+        if(is_array($argv)) {
             array_shift($argv);
-            $this->route = array_shift($argv);
-            $this->RouteExplodeParts($this->route, $controller, $action);
-            $this->action = $action;
-            $this->controller = $controller;
-            $this->args = $argv;
+            if(count($argv) >= 1) {
+                $this->route = array_shift($argv);
+                $this->RouteExplodeParts($this->route, $controller, $action);
+                $this->args = $argv;
+            }
         }
+        $this->action = $action;
+        $this->controller = $controller;
     }
 
     /**
