@@ -1,9 +1,8 @@
 <?php
 
-namespace sn\core\model;
+namespace sn\core\console\model;
 
 use sn\core\console\Console;
-use sn\core\console\model\ModelBase;
 use sn\core\exceptions\QueryException;
 
 class ModelProcedureBase extends ModelBase{
